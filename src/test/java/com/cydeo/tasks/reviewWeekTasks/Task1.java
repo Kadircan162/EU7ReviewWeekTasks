@@ -1,5 +1,6 @@
 package com.cydeo.tasks.reviewWeekTasks;
 
+import com.cydeo.tasks.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;
 import org.openqa.selenium.By;
@@ -11,18 +12,8 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 
-public class Task1 {
-    WebDriver driver;
-    @BeforeMethod
-    public void startUp(){
-        driver = DriverSetup.getDriver();
-        driver.get(ConfigurationReader.getProperties("url"));
-    }
-    @AfterMethod
-    public void burnDown() throws InterruptedException {
-        Thread.sleep(2000);
-        driver.quit();
-    }
+public class Task1 extends TestBase {
+
 
     @Test
     public void testAmazon1() throws InterruptedException {
@@ -41,6 +32,7 @@ public class Task1 {
 
         driver.findElement(By.id("add-to-cart-button")).click();
         driver.findElement(By.id("nav-cart")).click();
+        driver.navigate().refresh(); //sometimes it gets stuck at the cart page unless refreshing
 
         String actualQtyText = driver.findElement(By.id("sc-subtotal-label-activecart")).getText().substring(10,16);
         System.out.println("actualQtyText = " + actualQtyText);
@@ -72,6 +64,8 @@ public class Task1 {
         System.out.println("subtotalText = " + subtotalText);
         subtotal = Double.parseDouble(subtotalText.substring(2));
         Assert.assertEquals(subtotal, perItemPrice * newQty);
+
+        DriverSetup.closeDriver();
 
 
     }
