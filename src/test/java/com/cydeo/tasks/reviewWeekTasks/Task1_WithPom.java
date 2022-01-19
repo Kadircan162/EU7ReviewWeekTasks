@@ -4,17 +4,10 @@ import com.cydeo.pages.AmazonHomepage;
 import com.cydeo.tasks.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-
-public class Task1WithPom extends TestBase {
-
+public class Task1_WithPom extends TestBase {
 
     @Test
     public void testAddItemToCart() throws InterruptedException {
@@ -51,9 +44,6 @@ public class Task1WithPom extends TestBase {
 
         DriverSetup.closeDriver();
 
-
     }
-
-
 
 }

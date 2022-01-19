@@ -45,8 +45,6 @@ public class AmazonHomepage {
         findBtn.click();
 
         List<WebElement> products = driver.findElements(By.cssSelector("[data-component-type='s-search-result']"));
-        System.out.println("products.size() = " + products.size());
-        System.out.println("products = " + products);
 
         for (WebElement webElement : products) {
             webElement.click();
