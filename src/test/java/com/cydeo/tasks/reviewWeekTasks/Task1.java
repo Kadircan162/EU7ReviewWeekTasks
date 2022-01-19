@@ -4,10 +4,8 @@ import com.cydeo.tasks.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.*;
 import org.testng.annotations.Test;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class Task1 extends TestBase {
 
 
     @Test
-    public void testAmazon1() throws InterruptedException {
+    public void testAddItemToCart() throws InterruptedException {
         String product = ConfigurationReader.getProperties("product_man1");
         WebElement searchBox = driver.findElement(By.id("twotabsearchtextbox"));
         searchBox.sendKeys(product);
