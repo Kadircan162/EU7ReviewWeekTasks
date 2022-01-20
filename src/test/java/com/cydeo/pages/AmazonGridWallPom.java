@@ -61,14 +61,13 @@ public class AmazonGridWallPom {
         for (WebElement prod : prodList) {
             String prodLink =  prod.getAttribute("href");
             BrowserUtils.openNewWindow();
-            List<String> tabs = new ArrayList<>(driver.getWindowHandles());
             BrowserUtils.switchToWindow(1);
             BrowserUtils.openProductPage(prodLink);
             if (sideBox.getAttribute("innerHTML").contains("Qty:")) {//iterate until the product has Qty dropdown list or not
                 break;
             }else {
                 driver.close();
-                driver.switchTo().window(tabs.get(0));//even the tab gets closed, driver still looks at the new tab
+                BrowserUtils.switchToWindow(0);//even the tab gets closed, driver still looks at the new tab(1)
             }
         }
 
