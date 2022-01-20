@@ -19,5 +19,7 @@ public class TestBase {
     public void burnDown() throws InterruptedException {
         Thread.sleep(2000);
         driver.quit();
+
     }
+
 }
