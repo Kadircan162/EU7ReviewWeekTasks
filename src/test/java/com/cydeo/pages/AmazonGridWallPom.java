@@ -1,9 +1,8 @@
 package com.cydeo.pages;
 
+import com.cydeo.utilities.BrowserUtils;
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,9 +12,9 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmazonHomepage {
+public class AmazonGridWallPom {
 
-    public AmazonHomepage(){
+    public AmazonGridWallPom(){
         PageFactory.initElements(DriverSetup.getDriver(), this);
     }
 
@@ -25,8 +24,8 @@ public class AmazonHomepage {
     @FindBy(id = "nav-search-submit-button")
     public WebElement findBtn;
 
-    @FindBy(css = "[data-component-type='s-search-result']")
-    public List<WebElement> products;
+    @FindBy(css = "[class='a-link-normal s-no-outline']")
+    public List<WebElement> prodList;
 
     @FindBy(css = "#quantity")
     public WebElement qtyDropdownAtPdp;
@@ -54,25 +53,22 @@ public class AmazonHomepage {
 
     WebDriver driver = DriverSetup.getDriver();
 
-    public void findProduct() throws InterruptedException {
+    public void findProduct(){
         String product = ConfigurationReader.getProperties("product_man1");
         searchBox.sendKeys(product);
         findBtn.click();
 
-        List<WebElement> prodList = driver.findElements(By.cssSelector("[class='a-link-normal s-no-outline']"));
-        System.out.println("prodList.size() = " + prodList.size());
-
         for (WebElement prod : prodList) {
             String prodLink =  prod.getAttribute("href");
-            ((JavascriptExecutor)driver).executeScript("window.open()");
+            BrowserUtils.openNewWindow();
             List<String> tabs = new ArrayList<>(driver.getWindowHandles());
-            driver.switchTo().window(tabs.get(1));
-            driver.get(prodLink);
+            BrowserUtils.switchToWindow(1);
+            BrowserUtils.openProductPage(prodLink);
             if (sideBox.getAttribute("innerHTML").contains("Qty:")) {//iterate until the product has Qty dropdown list or not
                 break;
             }else {
-                driver.close();//even the tab gets closed, driver still looks at the new tab
-                driver.switchTo().window(tabs.get(0));
+                driver.close();
+                driver.switchTo().window(tabs.get(0));//even the tab gets closed, driver still looks at the new tab
             }
         }
 
