@@ -9,12 +9,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AmazonGridWallPom {
+public class AmazonPom {
 
-    public AmazonGridWallPom(){
+    public AmazonPom(){
         PageFactory.initElements(DriverSetup.getDriver(), this);
     }
 
