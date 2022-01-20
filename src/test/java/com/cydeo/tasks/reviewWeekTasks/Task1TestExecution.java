@@ -1,6 +1,6 @@
 package com.cydeo.tasks.reviewWeekTasks;
 
-import com.cydeo.pages.AmazonGridWallPom;
+import com.cydeo.pages.AmazonPom;
 import com.cydeo.tasks.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;
@@ -10,9 +10,9 @@ import org.testng.annotations.Test;
 public class Task1TestExecution extends TestBase { //1.Go to https://www.amazon.com from TestBase
 
     @Test
-    public void testAddEditCart() throws InterruptedException {
+    public void testAddEditCart() throws InterruptedException { //checkout TestBase for url
 
-        AmazonGridWallPom homepage = new AmazonGridWallPom();
+        AmazonPom homepage = new AmazonPom();
         homepage.findProduct();//2.Search for "hats for men" (Call from Configuration.properties file)
 
         String quantity = ConfigurationReader.getProperties("quantity");

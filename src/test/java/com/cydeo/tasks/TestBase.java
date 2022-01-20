@@ -13,7 +13,7 @@ public class TestBase {
     @BeforeMethod
     public void startUp(){
         driver = DriverSetup.getDriver();
-        driver.get(ConfigurationReader.getProperties("url"));//1.Go to https://www.amazon.com
+        driver.get(ConfigurationReader.getProperties("urlMoneyGaming"));//1. Go to url in configuration.properties
     }
     @AfterMethod
     public void burnDown() throws InterruptedException {
