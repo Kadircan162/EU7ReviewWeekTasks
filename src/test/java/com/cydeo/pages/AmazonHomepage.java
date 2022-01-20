@@ -3,12 +3,14 @@ package com.cydeo.pages;
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AmazonHomepage {
@@ -57,15 +59,23 @@ public class AmazonHomepage {
         searchBox.sendKeys(product);
         findBtn.click();
 
-        for (WebElement webElement : products) {
-            webElement.click();
-            if (!sideBox.getAttribute("innerHTML").contains("Qty:")) {//iterate until the product has Qty dropdown list or not
-                driver.navigate().back();
-                Thread.sleep(2000);
-            }else {
+        List<WebElement> prodList = driver.findElements(By.cssSelector("[class='a-link-normal s-no-outline']"));
+        System.out.println("prodList.size() = " + prodList.size());
+
+        for (WebElement prod : prodList) {
+            String prodLink =  prod.getAttribute("href");
+            ((JavascriptExecutor)driver).executeScript("window.open()");
+            List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+            driver.switchTo().window(tabs.get(1));
+            driver.get(prodLink);
+            if (sideBox.getAttribute("innerHTML").contains("Qty:")) {//iterate until the product has Qty dropdown list or not
                 break;
+            }else {
+                driver.close();//even the tab gets closed, driver still looks at the new tab
+                driver.switchTo().window(tabs.get(0));
             }
         }
+
     }
 
     public void selectQty(String quantity){
