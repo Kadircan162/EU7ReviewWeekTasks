@@ -7,7 +7,7 @@ import com.cydeo.utilities.DriverSetup;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Task1_WithPom extends TestBase { //1.Go to https://www.amazon.com from TestBase
+public class Task1TestExecution extends TestBase { //1.Go to https://www.amazon.com from TestBase
 
     @Test
     public void testAddEditCart() throws InterruptedException {
