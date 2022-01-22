@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AmazonPom {
@@ -44,7 +45,7 @@ public class AmazonPom {
     @FindBy(id = "sc-subtotal-amount-activecart")
     public WebElement subTotalPrice;
 
-    @FindBy(css = "[name='quantity']")
+    @FindBy(id = "quantity")
     public WebElement qtyDropdownAtCart;
 
     @FindBy(css = "[class='a-box-inner']")
@@ -60,13 +61,14 @@ public class AmazonPom {
         for (WebElement prod : prodList) {
             String prodLink =  prod.getAttribute("href");
             BrowserUtils.openNewWindow();
-            BrowserUtils.switchToWindow(1);
-            BrowserUtils.openProductPage(prodLink);
-            if (sideBox.getAttribute("innerHTML").contains("Qty:")) {//iterate until the product has Qty dropdown list or not
+            List<String> winTabs = new ArrayList<>(driver.getWindowHandles());
+            driver.switchTo().window(winTabs.get(1));
+            driver.get(prodLink);
+            if (sideBox.getAttribute("innerHTML").contains("Qty:")) {//iterate until the product has Qty dropdown list
                 break;
             }else {
                 driver.close();
-                BrowserUtils.switchToWindow(0);//even the tab gets closed, driver still looks at the new tab(1)
+                driver.switchTo().window(winTabs.get(0));//even the tab gets closed, driver still looks at the new tab(1)
             }
         }
 
@@ -97,9 +99,8 @@ public class AmazonPom {
     }
 
     public void editQty(String newQuantity){
-        System.out.println("newQuantity = " + newQuantity);
-        Select select2 = new Select(qtyDropdownAtCart);
-        select2.selectByVisibleText(newQuantity);
+        Select select = new Select(qtyDropdownAtCart);
+        select.selectByVisibleText(newQuantity);
     }
 
 }
