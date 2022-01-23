@@ -7,3 +7,13 @@ Task 1: The task consists on the next steps:
 6.	Assert that the total price and quantity has been correctly changed
 The goal of this test is to check if you are able to automate a test of a given website, but we'd like you to also demonstrate
 the coding quality, structure, and style of the deliverables.
+
+** A code to verify for a product with no Qty dropdown **
+boolean b = false;
+if(b == false){
+  driver.get("https://www.amazon.com/Carhartt-Mens-Odessa-Brown-Size/dp/B00B354UUC/ref=sr_1_4?keywords=hats%2Bfor%2Bmen&qid=1642960860&sprefix=hats%2Bfo%2Caps%2C267&sr=8-4&th=1&psc=1");
+  b = true;
+}else {
+  driver.get(prodLink);
+}
+

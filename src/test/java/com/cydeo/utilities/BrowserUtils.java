@@ -14,4 +14,6 @@ public class BrowserUtils {
         public static void openProductPage(String prodLink){
             DriverSetup.getDriver().get(prodLink);
         }
+
+
 }
