@@ -1,0 +1,24 @@
+Task 3
+Application under test : http://zero.webappsecurity.com/
+Login credentials:
+Username = “username”
+Password = “password”
+Login Feature
+    AC1: Only authorized users should be able to login to the application.
+    AC2: When user logs in with valid credentials, Account summary page should be displayed.
+    AC3: Users with wrong username or wrong password should not be able to login.
+    AC4: Users with blank username or password should also not be able to login.
+    AC3.1/4.1: When user tries to login with invalid information, error message “Login and/or password are wrong.”
+should be displayed.
+
+Account summary Feature
+    AC5: Account summary page should have the title Zero – Account summary.
+    AC6: Account summary page should have to following account types: Cash Accounts, Investment
+Accounts, Credit Accounts, Loan Accounts.
+    AC7: Credit Accounts table must have columns: Account, Credit Card and Balance.
+
+Account Activity Feature
+    AC8: Account Activity page should have the title Zero – Account activity.
+    AC9: In the Account drop down default option should be Savings.
+    AC10: Account drop down should have the following options: Savings, Checking, Loan, Credit Card, Brokerage.
+    AC11: Transactions table should have column names Date, Description, Deposit, Withdrawal.

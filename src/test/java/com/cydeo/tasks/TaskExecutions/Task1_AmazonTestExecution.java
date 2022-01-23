@@ -1,4 +1,4 @@
-package com.cydeo.tasks.reviewWeekTasks;
+package com.cydeo.tasks.TaskExecutions;
 
 import com.cydeo.pages.AmazonGridwall;
 import com.cydeo.pages.AmazonBasePage;
