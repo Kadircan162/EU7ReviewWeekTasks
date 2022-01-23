@@ -20,32 +20,31 @@ public class Task1_AmazonTestExecution extends TestBase { //1.Go to https://www.
         AmazonGridwall gridwall = new AmazonGridwall();
         gridwall.findProduct();
 
-        String quantity = ConfigurationReader.getProperties("quantity");
+        String expectedQtyText = ConfigurationReader.getProperties("quantity");
         AmazonProductPage pdp = new AmazonProductPage();
-        pdp.selectQty(quantity); //3.Add the first hat appearing to Cart with quantity 2
+        pdp.selectQty(expectedQtyText); //3.Add the first hat appearing to Cart with quantity 2
 
         basePage.navigateToCart(); //4.Open cart
 
         AmazonCartPage cartPage = new AmazonCartPage();
         String actualQtyText = cartPage.getActualQtyText();
-        String expectedQtyText = quantity + "";
-        Assert.assertEquals(actualQtyText, expectedQtyText, "Quantity is not true");//4.Assert that quantity are correct
+        Assert.assertEquals(actualQtyText, expectedQtyText, "Quantity text is not true");//4.Assert that quantity are correct
 
         double perItemPrice = cartPage.getPricePerItem();
         double subtotal = cartPage.getSubtotalPrice();
-        int currentQuantity = Integer.parseInt(quantity);
-        Assert.assertEquals(subtotal, perItemPrice * currentQuantity);//4.Assert that the total price are correct
+        int quantity = Integer.parseInt(expectedQtyText);
+        Assert.assertEquals(subtotal, perItemPrice * Integer.parseInt(expectedQtyText), "Subtotal is not correct");//4.Assert that the total price are correct
 
         int decreaseAmount = Integer.parseInt(ConfigurationReader.getProperties("decreaseAmount"));
-        currentQuantity = currentQuantity-decreaseAmount;
-        cartPage.editQty("" + currentQuantity);//5.Reduce the quantity from 2 to 1 in Cart for the item selected in the step 3
+        quantity = quantity-decreaseAmount;
+        cartPage.editQty("" + quantity);//5.Reduce the quantity from 2 to 1 in Cart for the item selected in the step 3
 
-        expectedQtyText = currentQuantity + "";
         actualQtyText = cartPage.getActualQtyText();
-        Assert.assertEquals(actualQtyText, expectedQtyText, "Quantity is not true");//6.Assert that the quantity has been correctly changed
+        expectedQtyText = quantity + "";
+        Assert.assertEquals(actualQtyText, expectedQtyText, "Quantity text is not true");//6.Assert that the quantity has been correctly changed
 
         subtotal = cartPage.getSubtotalPrice();
-        Assert.assertEquals(subtotal, perItemPrice * currentQuantity);//6.Assert that the total price has been correctly changed
+        Assert.assertEquals(subtotal, perItemPrice * quantity, "Subtotal is not correct");//6.Assert that the total price has been correctly changed
 
     }
 
