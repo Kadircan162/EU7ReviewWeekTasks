@@ -1,12 +1,12 @@
-package com.cydeo.tasks.TaskExecutions;
+package com.cydeo.taskExecutions.TaskExecutions;
 
 import com.cydeo.pages.MoneyGamingBasePage;
 import com.cydeo.pages.MoneyGamingSubmitPage;
-import com.cydeo.tasks.TestBase;
+import com.cydeo.taskExecutions.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Task2_MoneyGamingTestExecution extends TestBase {
+public class Task2_MoneyGamingTestExecution extends TestBase {//1.Go to https://moneygaming.qa.gameaccount.com/ from TestBase
 
     @Test
     public void task2() {

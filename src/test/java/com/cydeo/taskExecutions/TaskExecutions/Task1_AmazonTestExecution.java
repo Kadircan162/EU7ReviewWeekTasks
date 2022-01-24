@@ -1,10 +1,10 @@
-package com.cydeo.tasks.TaskExecutions;
+package com.cydeo.taskExecutions.TaskExecutions;
 
 import com.cydeo.pages.AmazonGridwall;
 import com.cydeo.pages.AmazonBasePage;
 import com.cydeo.pages.AmazonCartPage;
 import com.cydeo.pages.AmazonProductPage;
-import com.cydeo.tasks.TestBase;
+import com.cydeo.taskExecutions.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import org.testng.Assert;
 import org.testng.annotations.Test;

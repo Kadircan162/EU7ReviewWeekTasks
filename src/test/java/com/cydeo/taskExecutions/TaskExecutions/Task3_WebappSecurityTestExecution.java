@@ -1,15 +1,15 @@
-package com.cydeo.tasks.TaskExecutions;
+package com.cydeo.taskExecutions.TaskExecutions;
 
 import com.cydeo.pages.WebAppAccountActivity;
 import com.cydeo.pages.WebAppAccountSummary;
 import com.cydeo.pages.WebAppSecurityLoginPage;
-import com.cydeo.tasks.TestBase;
+import com.cydeo.taskExecutions.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.List;
 
-public class Task3_WebappSecurityTestExecution extends TestBase{
+public class Task3_WebappSecurityTestExecution extends TestBase{//1.Go to http://zero.webappsecurity.com/ from TestBase
 
     WebAppSecurityLoginPage appSecurityLoginPage;
     WebAppAccountSummary accountSummary;
