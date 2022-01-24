@@ -11,9 +11,4 @@ public class BrowserUtils {
             ((JavascriptExecutor)DriverSetup.getDriver()).executeScript("window.open()");
         }
 
-        public static void openProductPage(String prodLink){
-            DriverSetup.getDriver().get(prodLink);
-        }
-
-
 }
