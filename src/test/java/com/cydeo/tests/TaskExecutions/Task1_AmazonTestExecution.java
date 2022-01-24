@@ -1,7 +1,6 @@
 package com.cydeo.tests.TaskExecutions;
 
 import com.cydeo.pages.AmazonGridwall;
-import com.cydeo.pages.AmazonBasePage;
 import com.cydeo.pages.AmazonCartPage;
 import com.cydeo.pages.AmazonProductPage;
 import com.cydeo.tests.TestBase;
@@ -14,19 +13,18 @@ public class Task1_AmazonTestExecution extends TestBase { //1.Go to https://www.
 
     @Test
     public void testAddEditCart() throws InterruptedException { //checkout TestBase for url
-        AmazonBasePage basePage = new AmazonBasePage();
-        basePage.searchProduct();//2.Search for "hats for men" (Call from Configuration.properties file)
 
         AmazonGridwall gridwall = new AmazonGridwall();
-        gridwall.findProduct();
+        gridwall.findProduct();//2.Search for "hats for men" (Call from Configuration.properties file) and find proper one
 
         String expectedQtyText = ConfigurationReader.getProperties("quantity");
         AmazonProductPage pdp = new AmazonProductPage();
         pdp.selectQty(expectedQtyText); //3.Add the first hat appearing to Cart with quantity 2
-
-        basePage.navigateToCart(); //4.Open cart
+        pdp.addToCart.click();
 
         AmazonCartPage cartPage = new AmazonCartPage();
+        cartPage.navigateToCart(); //4.Open cart
+
         String actualQtyText = cartPage.getActualQtyText();
         Assert.assertEquals(actualQtyText, expectedQtyText, "Quantity text is not true");//4.Assert that quantity are correct
 

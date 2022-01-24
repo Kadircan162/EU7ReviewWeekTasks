@@ -1,19 +1,10 @@
 package com.cydeo.pages;
 
-import com.cydeo.utilities.DriverSetup;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class AmazonCartPage {
-
-    WebDriver driver = DriverSetup.getDriver();
-
-    public AmazonCartPage(){
-        PageFactory.initElements(driver, this);
-    }
+public class AmazonCartPage extends AmazonBasePage{
 
     @FindBy(id = "sc-subtotal-label-activecart")
     public WebElement actualQty;

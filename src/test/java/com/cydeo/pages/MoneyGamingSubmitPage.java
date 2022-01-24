@@ -1,17 +1,11 @@
 package com.cydeo.pages;
 
 import com.cydeo.utilities.ConfigurationReader;
-import com.cydeo.utilities.DriverSetup;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class MoneyGamingSubmitPage {
-
-    public MoneyGamingSubmitPage(){
-        PageFactory.initElements(DriverSetup.getDriver(), this);
-    }
+public class MoneyGamingSubmitPage extends MoneyGamingBasePage {
 
     @FindBy(id = "title")
     public WebElement titleDropdown;

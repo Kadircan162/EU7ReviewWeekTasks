@@ -1,21 +1,13 @@
 package com.cydeo.pages;
 
 import com.cydeo.utilities.ConfigurationReader;
-import com.cydeo.utilities.DriverSetup;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WebAppAccountActivity {
-    WebDriver driver = DriverSetup.getDriver();
-
-    public WebAppAccountActivity(){
-        PageFactory.initElements(driver, this);
-    }
+public class WebAppAccountActivity extends WebappSecurityBasePage{
 
     @FindBy(xpath = "//a[.='Account Activity']")
     public WebElement accountActivityTab;

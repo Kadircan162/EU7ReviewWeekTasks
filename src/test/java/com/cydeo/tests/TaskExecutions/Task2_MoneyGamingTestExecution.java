@@ -1,6 +1,7 @@
 package com.cydeo.tests.TaskExecutions;
 
 import com.cydeo.pages.MoneyGamingBasePage;
+import com.cydeo.pages.MoneyGamingLoginPage;
 import com.cydeo.pages.MoneyGamingSubmitPage;
 import com.cydeo.tests.TestBase;
 import org.testng.Assert;
@@ -10,10 +11,10 @@ public class Task2_MoneyGamingTestExecution extends TestBase {//1.Go to https://
 
     @Test
     public void task2() {
-        MoneyGamingBasePage gamingBasePage = new MoneyGamingBasePage();
+        MoneyGamingLoginPage gamingLoginPage = new MoneyGamingLoginPage();
         MoneyGamingSubmitPage submitPage = new MoneyGamingSubmitPage();
 
-        gamingBasePage.clickJoinBtn();
+        gamingLoginPage.clickJoinBtn();
         submitPage.selectTitle();
         submitPage.enterFirstName();
         submitPage.enterLastName();

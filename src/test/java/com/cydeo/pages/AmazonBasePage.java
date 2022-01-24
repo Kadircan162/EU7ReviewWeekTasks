@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class AmazonBasePage {
+public abstract class AmazonBasePage {
+
+    WebDriver driver = DriverSetup.getDriver();
 
     public AmazonBasePage(){
         PageFactory.initElements(DriverSetup.getDriver(), this);
@@ -21,8 +23,6 @@ public class AmazonBasePage {
 
     @FindBy(id = "nav-cart")
     public WebElement goToCart;
-
-    WebDriver driver = DriverSetup.getDriver();
 
     public void searchProduct(){
         String product = ConfigurationReader.getProperties("product_man1");

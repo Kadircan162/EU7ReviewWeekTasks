@@ -1,17 +1,10 @@
 package com.cydeo.pages;
 
-import com.cydeo.utilities.DriverSetup;
-import org.openqa.selenium.WebDriver;
+import com.cydeo.utilities.ConfigurationReader;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class WebAppSecurityLoginPage {
-    WebDriver driver = DriverSetup.getDriver();
-
-    public WebAppSecurityLoginPage(){
-        PageFactory.initElements(driver, this);
-    }
+public class WebAppSecurityLoginPage extends WebappSecurityBasePage{
 
     @FindBy(id = "signin_button")
     public WebElement signInBtn;
@@ -34,7 +27,10 @@ public class WebAppSecurityLoginPage {
     @FindBy(id = "proceed-link")
     public WebElement proceedBtn;
 
-    public void login(String username, String password){
+    String username;
+    String password;
+
+    private void login(String username, String password){
         try {
             signInBtn.click();
             usernameInputBox.sendKeys(username);
@@ -47,7 +43,40 @@ public class WebAppSecurityLoginPage {
         }
     }
 
+    public void loginPositiveTest(){ //AC1 and AC2
+        String username = ConfigurationReader.getProperties("wepAppUsername");
+        String password = ConfigurationReader.getProperties("webAppPassword");
+        login(username, password);
+    }
+
     public String getWebappLoginInvalidAlertMsg(){
         return wrongUsernamePasswordAlert.getText();
     }
+
+    public void loginNegativeTestInvalidUsername(){ //AC3
+        username = ConfigurationReader.getProperties("webAppInvalidUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        login(username, password);
+    }
+
+    public void loginNegativeTestInvalidPassword(){ //AC3
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppInvalidPassword");
+        login(username, password);
+    }
+
+    public void loginNegativeTestBlankUsername(){ //AC4
+        username = ConfigurationReader.getProperties("webappSecurityBlankUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        login(username, password);
+    }
+
+    public void loginNegativeTestBlankPassword(){ //AC4
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webappSecurityBlankPassword");
+        login(username, password);
+    }
+
+
+
 }
