@@ -24,7 +24,7 @@ public class TestBase {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
-    @AfterMethod
+    //@AfterMethod
     public void tearDown() throws InterruptedException {
         Thread.sleep(2000);
         DriverSetup.closeDriver();

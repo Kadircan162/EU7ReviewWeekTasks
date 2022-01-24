@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.List;
 
-public class Task3TestExecution extends TestBase{
+public class Task3_WebappSecurityTestExecution extends TestBase{
 
     WebAppSecurityLoginPage appSecurityLoginPage;
     WebAppAccountSummary accountSummary;
