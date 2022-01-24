@@ -1,4 +1,4 @@
-package com.cydeo.taskExecutions;
+package com.cydeo.tests;
 
 import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.DriverSetup;

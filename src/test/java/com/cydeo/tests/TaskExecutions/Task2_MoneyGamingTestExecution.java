@@ -1,8 +1,8 @@
-package com.cydeo.taskExecutions.TaskExecutions;
+package com.cydeo.tests.TaskExecutions;
 
 import com.cydeo.pages.MoneyGamingBasePage;
 import com.cydeo.pages.MoneyGamingSubmitPage;
-import com.cydeo.taskExecutions.TestBase;
+import com.cydeo.tests.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
