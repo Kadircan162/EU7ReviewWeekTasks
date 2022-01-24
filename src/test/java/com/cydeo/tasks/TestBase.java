@@ -15,7 +15,7 @@ public class TestBase {
     protected Actions actions;
     protected WebDriverWait wait;
 
-    @BeforeSuite
+    @BeforeMethod
     public void startUp(){
         driver = DriverSetup.getDriver();
         driver.get(ConfigurationReader.getProperties("url"));//1. Go to url in configuration.properties
@@ -24,7 +24,7 @@ public class TestBase {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
-    @AfterSuite
+    @AfterMethod
     public void tearDown() throws InterruptedException {
         Thread.sleep(2000);
         DriverSetup.closeDriver();

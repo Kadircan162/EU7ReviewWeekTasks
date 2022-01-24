@@ -1,133 +1,169 @@
 package com.cydeo.tasks.TaskExecutions;
 
-import com.cydeo.pages.WebappSecurityPom;
+import com.cydeo.pages.WebAppAccountActivity;
+import com.cydeo.pages.WebAppAccountSummary;
+import com.cydeo.pages.WebAppSecurityLoginPage;
 import com.cydeo.tasks.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
 import org.testng.Assert;
-import org.testng.annotations.Test;
-
+import org.testng.annotations.*;
+import java.util.List;
 
 public class Task3TestExecution extends TestBase{
 
-    WebappSecurityPom appSecurityPom = new WebappSecurityPom();
+    WebAppSecurityLoginPage appSecurityLoginPage;
+    WebAppAccountSummary accountSummary;
+    WebAppAccountActivity accountActivity;
+    String username;
+    String password;
+    String expectedAlertMsg = ConfigurationReader.getProperties("webappLoginAlertMsg");
+    String actualAlertMsg;
 
     @Test
-    public void loginPositiveTest(){ //AC1
-        appSecurityPom.login();
-        String loginPageUrl = ConfigurationReader.getProperties("webappSecurityUrl");
+    public void loginPositiveTest(){ //AC1 and AC2
+        WebAppSecurityLoginPage appSecurityLoginPage = new WebAppSecurityLoginPage();
+        String username = ConfigurationReader.getProperties("wepAppUsername");
+        String password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        String expectedUrlAfterLogin = ConfigurationReader.getProperties("UrlAfterLogin");
         String actualUrlAfterLogin = driver.getCurrentUrl();
-        Assert.assertNotEquals(loginPageUrl, actualUrlAfterLogin, "Could not login"); //AC1 passed
+        Assert.assertEquals(actualUrlAfterLogin, expectedUrlAfterLogin,"Could not login/Account Summary page was not open"); //AC1 and AC2 passed
+
     }
 
-   @Test
-    public void verifyAccountSummaryPageDisplayed(){ //AC2
-        driver.get(ConfigurationReader.getProperties("url"));
-//        if(driver.getPageSource().contains())
-//        appSecurityPom.login();
-        String actualAccountSummaryUrl = driver.getCurrentUrl();
-        String expectedAccountSummaryUrl = ConfigurationReader.getProperties("webappSecurityUrlAfterLogin");
-        Assert.assertEquals(actualAccountSummaryUrl, expectedAccountSummaryUrl, "Account Summary page did not open");//AC2 passed
-    }
-/*
     @Test
     public void loginNegativeTestInvalidUsername(){ //AC3
-        String actualAlertMsg = appSecurityPom.loginWithInvalidUsername();
-        Assert.assertTrue(appSecurityPom.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with invalid username");
-        String expectedAlertMsg = ConfigurationReader.getProperties("webappLoginAlertMsg");
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        username = ConfigurationReader.getProperties("webAppInvalidUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        actualAlertMsg = appSecurityLoginPage.getWebappLoginInvalidAlertMsg();
+        Assert.assertTrue(appSecurityLoginPage.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with invalid username");
         Assert.assertEquals(expectedAlertMsg, actualAlertMsg, "Alert Msg not correct ");//AC3 and AC4 passed
     }
+
     @Test
     public void loginNegativeTestInvalidPassword(){ //AC3
-        String actualAlertMsg = appSecurityPom.loginWithInvalidPassword();
-        Assert.assertTrue(appSecurityPom.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with invalid password");
-        String expectedAlertMsg = ConfigurationReader.getProperties("webappLoginAlertMsg");
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppInvalidPassword");
+        appSecurityLoginPage.login(username, password);
+        Assert.assertTrue(appSecurityLoginPage.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with invalid username");
+        actualAlertMsg = appSecurityLoginPage.getWebappLoginInvalidAlertMsg();
         Assert.assertEquals(expectedAlertMsg, actualAlertMsg, "Alert Msg not correct ");//AC3 and AC4 passed
     }
 
     @Test
     public void loginNegativeTestBlankUsername(){ //AC4
-        String actualAlertMsg = appSecurityPom.loginWithBlankUsername();
-        Assert.assertTrue(appSecurityPom.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with blank username");
-        String expectedAlertMsg = ConfigurationReader.getProperties("webappLoginAlertMsg");
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        username = ConfigurationReader.getProperties("webappSecurityBlankUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        Assert.assertTrue(appSecurityLoginPage.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with blank username");
+        actualAlertMsg = appSecurityLoginPage.getWebappLoginInvalidAlertMsg();
         Assert.assertEquals(expectedAlertMsg, actualAlertMsg, "Alert Msg not correct ");//AC3 and AC4 passed
     }
 
     @Test
     public void loginNegativeTestBlankPassword(){ //AC4
-        String actualAlertMsg = appSecurityPom.loginWithBlankPassword();
-        Assert.assertTrue(appSecurityPom.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with blank password");
-        String expectedAlertMsg = ConfigurationReader.getProperties("webappLoginAlertMsg");
-        Assert.assertEquals(expectedAlertMsg, actualAlertMsg, "Alert Msg not correct ");//AC4 passed
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webappSecurityBlankPassword");
+        appSecurityLoginPage.login(username, password);
+        Assert.assertTrue(appSecurityLoginPage.wrongUsernamePasswordAlert.isDisplayed(), "Logged in with blank username");
+        actualAlertMsg = appSecurityLoginPage.getWebappLoginInvalidAlertMsg();
+        Assert.assertEquals(expectedAlertMsg, actualAlertMsg, "Alert Msg not correct ");//AC3 and AC4 passed
     }
 
     @Test
     public void verifyAccountSummaryTab(){ //AC5
-        appSecurityPom.login();
-        String actualTitle = driver.getTitle();
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountSummary = new WebAppAccountSummary();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        String actualTitle = accountSummary.getActualTitle();
         String expectedTitle = ConfigurationReader.getProperties("webappExpectedAccountSummaryTitle");
+        System.out.println("expectedTitle = " + expectedTitle);
         Assert.assertEquals(actualTitle, expectedTitle); //AC5 passed
     }
 
     @Test
     public void verifyAccountSummaryTypes(){ //AC6
-        appSecurityPom.login();
-        List<String> expectedAccountSummaryTypes = appSecurityPom.getExpectedAccountSummaryTypes();
-        List<String> actualAccountSummaryTypes = appSecurityPom.getActualAccountSummaryTypes();
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountSummary = new WebAppAccountSummary();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        List<String> expectedAccountSummaryTypes = accountSummary.getExpectedAccountSummaryTypes();
+        List<String> actualAccountSummaryTypes = accountSummary.getActualAccountSummaryTypes();
+        System.out.println(expectedAccountSummaryTypes);
+        System.out.println(actualAccountSummaryTypes);
         Assert.assertEquals(expectedAccountSummaryTypes, actualAccountSummaryTypes, "Account types are not matching");//AC6 passed
     }
 
     @Test
     public void verifyCreditAccountsColumns(){ //AC7
-        appSecurityPom.login();
-        List<String> expectedCreditAccountColumns = appSecurityPom.getExpectedCreditAccountColumns();
-        List<String> actualCreditAccountColumns = appSecurityPom.getActualCreditAccountColumns();
-        Assert.assertEquals(expectedCreditAccountColumns, actualCreditAccountColumns, "Creditcar Account columns are not matching");//AC7 passed
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountSummary = new WebAppAccountSummary();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        List<String> expectedCreditAccountColumns = accountSummary.getExpectedCreditAccountColumns();
+        List<String> actualCreditAccountColumns = accountSummary.getActualCreditAccountColumns();
+        Assert.assertEquals(expectedCreditAccountColumns, actualCreditAccountColumns, "Credit card Account columns are not matching");//AC7 passed
     }
 
     @Test
     public void verifyAccountActivityTitle(){ //AC8
-        appSecurityPom.login();
-        appSecurityPom.accountActivityTab.click();
-        String actualTitle = driver.getTitle();
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountActivity = new WebAppAccountActivity();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        accountActivity.accountActivityTab.click();
+        String actualTitle = accountActivity.getActualTitle();
         String expectedTitle = ConfigurationReader.getProperties("accountActivityTitle");
         Assert.assertEquals(expectedTitle, actualTitle, "Titles are not matching"); //AC8 passed
     }
 
     @Test
     public void accountActivityDropdownDefaultOptionTest(){ //AC9
-        appSecurityPom.login();
-        appSecurityPom.accountActivityTab.click();
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountActivity = new WebAppAccountActivity();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        accountActivity.accountActivityTab.click();
         String expectedDefaultSelected = ConfigurationReader.getProperties("accountActivityDefaultOption");
-        String actualDefaultSelected = appSecurityPom.getActualDefaultOptionForAccountActivityDropdown();
+        String actualDefaultSelected = accountActivity.getActualDefaultOptionForAccountActivityDropdown();
         Assert.assertEquals(expectedDefaultSelected, actualDefaultSelected, "Actual selected option şs not correct");//AC9 passed
     }
 
     @Test
     public void accountActivityDropdownOptionsListTest(){ //AC10
-        appSecurityPom.login();
-        appSecurityPom.accountActivityTab.click();
-        List<String> expectedAccountActivityDropdownList = appSecurityPom.getExpectedAccountActivityDropdownOptions();
-        List<String> actualAccountActivityDropdownList = appSecurityPom.getActualAccountActivityDropdownOptions();
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountActivity = new WebAppAccountActivity();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        accountActivity.accountActivityTab.click();
+        List<String> expectedAccountActivityDropdownList = accountActivity.getExpectedAccountActivityDropdownOptions();
+        List<String> actualAccountActivityDropdownList = accountActivity.getActualAccountActivityDropdownOptions();
         Assert.assertEquals(expectedAccountActivityDropdownList, actualAccountActivityDropdownList, "Account Activity Dropdown options are not correct");//AC10 passed
     }
 
     @Test
     public void accountActivityTransactionColumnsTest(){ //AC11
-        appSecurityPom.login();
-        appSecurityPom.accountActivityTab.click();
-        List<String> expectedAccountActivityColumnsList = appSecurityPom.expectedAccountActivityTransactionColumns();
-        List<String> actualAccountActivityTransactionColumnList = appSecurityPom.actualAccountActivityTransactionColumns();
+        appSecurityLoginPage = new WebAppSecurityLoginPage();
+        accountActivity = new WebAppAccountActivity();
+        username = ConfigurationReader.getProperties("wepAppUsername");
+        password = ConfigurationReader.getProperties("webAppPassword");
+        appSecurityLoginPage.login(username, password);
+        accountActivity.accountActivityTab.click();
+        List<String> expectedAccountActivityColumnsList = accountActivity.expectedAccountActivityTransactionColumns();
+        List<String> actualAccountActivityTransactionColumnList = accountActivity.actualAccountActivityTransactionColumns();
         Assert.assertEquals(expectedAccountActivityColumnsList,actualAccountActivityTransactionColumnList, "Account activity type are not correct");
     }
-
- */
-
-
-
-
-
-
-
-
 
 }
