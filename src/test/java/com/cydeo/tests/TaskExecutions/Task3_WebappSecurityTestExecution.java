@@ -5,6 +5,8 @@ import com.cydeo.pages.WebAppAccountSummary;
 import com.cydeo.pages.WebAppSecurityLoginPage;
 import com.cydeo.tests.TestBase;
 import com.cydeo.utilities.ConfigurationReader;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.List;
@@ -19,11 +21,22 @@ public class Task3_WebappSecurityTestExecution extends TestBase{//1.Go to http:/
 
     @Test
     public void loginPositiveTest(){ //AC1 and AC2
+        extentLogger = report.createTest("WebAppSecurity positive login test");
         appSecurityLoginPage = new WebAppSecurityLoginPage();
+
+        extentLogger.info("Enter username " + ConfigurationReader.getProperties("wepAppUsername"));
+        extentLogger.info("Enter password " + ConfigurationReader.getProperties("webAppPassword"));
+        extentLogger.info("Login");
         appSecurityLoginPage.loginPositiveTest();
+
         String expectedUrlAfterLogin = ConfigurationReader.getProperties("UrlAfterLogin");
         String actualUrlAfterLogin = driver.getCurrentUrl();
+
+        extentLogger.info("Verify user logged in");
+        extentLogger.info("The Account Summary page was displayed");
         Assert.assertEquals(actualUrlAfterLogin, expectedUrlAfterLogin,"Could not login/Account Summary page was not open"); //AC1 and AC2 passed
+        extentLogger.pass("PASSED");
+
     }
 
     @Test
